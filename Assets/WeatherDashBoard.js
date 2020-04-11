@@ -1,6 +1,12 @@
-//let user put in the cityName
-let cityName = "Atlanta";
 
+$("#searchBtn").on ("click", function (){
+    let cityName = $("input").val();
+    localStorage.setItem("city",cityName);
+    let lastSearch = $("<div>").text (localStorage.getItem("city"));
+  $(".historyitem").append(lastSearch);
+
+
+   
 var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
 
 $.ajax({
@@ -57,6 +63,14 @@ $.ajax({
 
 
 });
+
+
+});
+
+
+
+
+
 
 
 function createCityDateEl(cityData) {
