@@ -27,26 +27,44 @@ $.ajax({
     let latInfo = response.coord.lat;
     let lonInfo = response.coord.lon;
 
-    var forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latInfo + "&lon=" + lonInfo + "&appid=e112c6863270100dda4434fef755e48f";
-
+    var forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latInfo + "&lon=" + lonInfo + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
+-
     $.ajax({
         url: forecastUrl,
         method: "GET"
     }).then(function (forcastInfo) {
+
+        for (let a = 0; a < 6; a ++){
+            let forecastData = {"temp": forcastInfo.daily[0].temp.day,
+                                "humidity":forcastInfo.daily[0].humidity,
+                                "icon":forcastInfo.daily[0].weather[0].icon
+                                // "date":
+                       
+        };
+
+        createForecastEl(forecastData)
         console.log(forcastInfo)
-        let sampleData = [
-            {date:"Day1",temp:"Day1Temp",weather:"Day1Weather",humidity:"Day1Humidity"},
-            {date:"Day2",temp:"Day2Temp",weather:"Day2Weather",humidity:"Day2Humidity"},
-            {date:"Day3",temp:"Day3Temp",weather:"Day3Weather",humidity:"Day3Humidity"},
-            {date:"Day4",temp:"Day4Temp",weather:"Day4Weather",humidity:"Day4Humidity"},
-            {date:"Day5",temp:"Day5Temp",weather:"Day5Weather",humidity:"Day5Humidity"},
-        ];
+
+        var today       =new Date();
+        var in_a_week   =new Date();
+       in_a_week.setDate(today.getDate()+1);
+        console.log(today.toLocaleDateString())
+        console.log(in_a_week.toLocaleDateString())
       
-        createForecastEl(sampleData[0])
-        createForecastEl(sampleData[1])
-        createForecastEl(sampleData[2])
-        createForecastEl(sampleData[3])
-        createForecastEl(sampleData[4])
+
+
+        }
+        // console.log(forcastInfo)
+        // console.log(forcastInfo.daily[0].temp.day)
+        // console.log(forcastInfo.daily[0].humidity)
+        // console.log(forcastInfo.daily[0].weather[0].icon)
+     
+      
+        // createForecastEl(sampleData[0])
+        // createForecastEl(sampleData[1])
+        // createForecastEl(sampleData[2])
+        // createForecastEl(sampleData[3])
+        // createForecastEl(sampleData[4])
 
     
 
@@ -68,7 +86,7 @@ function createForecastEl(forecastData) {
 
     createForecastItemDataElement(forecastData.date, newDiv);
     createForecastItemDataElement(forecastData.temp, newDiv);
-    createForecastItemDataElement(forecastData.weather, newDiv);
+    createForecastItemDataElement(forecastData.icon, newDiv);
     createForecastItemDataElement(forecastData.humidity, newDiv);
 
     $(".forecastcontainer").append(newDiv);
