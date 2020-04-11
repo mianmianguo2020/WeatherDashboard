@@ -1,7 +1,7 @@
 //let user put in the cityName
 let cityName = "Atlanta";
 
-var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f";
+var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
 
 $.ajax({
     url: queryUrl,
@@ -21,55 +21,43 @@ $.ajax({
     createCityDateEl(windResult);
     createCityDateEl(uvResult);
 
-    console.log(response)
-    console.log(response.coord)
+    let labelDay = $("<label>").text("5-Day Forecast:");
+    $(".citydata").append(labelDay);
+
+    let forecastDataD = $("<div>").attr("class", "forecastcontainer");
+    $(".citydata").append(forecastDataD);
+
+
 
     let latInfo = response.coord.lat;
     let lonInfo = response.coord.lon;
 
-    var forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latInfo + "&lon=" + lonInfo + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
--
-    $.ajax({
-        url: forecastUrl,
-        method: "GET"
-    }).then(function (forcastInfo) {
+    let forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latInfo + "&lon=" + lonInfo + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
+    -
+        $.ajax({
+            url: forecastUrl,
+            method: "GET"
+        }).then(function (forcastInfo) {
 
-        for (let a = 0; a < 6; a ++){
-            let forecastData = {"temp": forcastInfo.daily[0].temp.day,
-                                "humidity":forcastInfo.daily[0].humidity,
-                                "icon":forcastInfo.daily[0].weather[0].icon
-                                // "date":
-                       
-        };
+            for (let a = 0; a < 5; a++) {
+                let today = new Date();
+                let in_a_week = new Date();
+                in_a_week.setDate(today.getDate() + a + 1);
+                let forecastData = {
+                    "temp": forcastInfo.daily[a].temp.day,
+                    "humidity": forcastInfo.daily[a].humidity,
+                    "icon": forcastInfo.daily[a].weather[0].icon,
+                    "date": in_a_week.toLocaleDateString()
+                }
+                createForecastEl(forecastData)
+            };
+          
 
-        createForecastEl(forecastData)
-        console.log(forcastInfo)
-
-        var today       =new Date();
-        var in_a_week   =new Date();
-       in_a_week.setDate(today.getDate()+1);
-        console.log(today.toLocaleDateString())
-        console.log(in_a_week.toLocaleDateString())
-      
+        });
 
 
-        }
-        // console.log(forcastInfo)
-        // console.log(forcastInfo.daily[0].temp.day)
-        // console.log(forcastInfo.daily[0].humidity)
-        // console.log(forcastInfo.daily[0].weather[0].icon)
-     
-      
-        // createForecastEl(sampleData[0])
-        // createForecastEl(sampleData[1])
-        // createForecastEl(sampleData[2])
-        // createForecastEl(sampleData[3])
-        // createForecastEl(sampleData[4])
-
-    
-
-    });
 });
+
 
 function createCityDateEl(cityData) {
     let newDiv = $("<div>");
@@ -83,20 +71,26 @@ $(".citydata").append(currentCityD);
 
 function createForecastEl(forecastData) {
     let newDiv = $("<div>").attr("class", "forecastitem");
+let weatherIcon =  "http://openweathermap.org/img/wn/"+forecastData.icon+".png"
 
     createForecastItemDataElement(forecastData.date, newDiv);
     createForecastItemDataElement(forecastData.temp, newDiv);
-    createForecastItemDataElement(forecastData.icon, newDiv);
+    createForecastWeatherIcon(weatherIcon, newDiv);
     createForecastItemDataElement(forecastData.humidity, newDiv);
 
     $(".forecastcontainer").append(newDiv);
 }
 
-let forecastDataD = $("<div>").attr("class", "forecastcontainer");
-$(".citydata").append(forecastDataD);
 
 function createForecastItemDataElement(data, forecastItemDiv) {
     let newDiv = $("<div>")
     $(newDiv).append(data);
     $(forecastItemDiv).append(newDiv);
 }
+
+function createForecastWeatherIcon(data, forecastItemDiv) {
+    let newIcon = $("<img>").attr("src",data);
+    $(forecastItemDiv).append(newIcon);
+}   
+
+
