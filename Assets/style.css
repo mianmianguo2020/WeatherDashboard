@@ -43,3 +43,30 @@ body {
     padding: 10px;
     border: 1px solid lightgray;
 }
+
+.forecastitem{
+background-color: lightskyblue;
+min-width: 120px;
+margin-top:30px;
+color: linen;
+
+}
+
+label {
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+
+.redColor {
+background-color: red;
+}
+
+.yellowColor{
+    background-color: yellow;
+}
+
+.greenColor{
+
+    background-color: lightgreen;
+
+}
