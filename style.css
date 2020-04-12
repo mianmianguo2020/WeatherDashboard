@@ -1,0 +1,72 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+}
+
+.app {
+    display: flex;
+    flex-grow: 1;
+}
+
+.citydata {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.historyitem {
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+.searchcolumn {
+    padding: 10px;
+}
+
+.forecastcontainer {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: stretch;
+    height: 100%; */
+}
+
+.currentcitydata {
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+.forecastitem{
+background-color: lightskyblue;
+min-width: 120px;
+margin-top:30px;
+color: linen;
+
+}
+
+label {
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+
+.redColor {
+background-color: red;
+}
+
+.yellowColor{
+    background-color: yellow;
+}
+
+.greenColor{
+
+    background-color: lightgreen;
+
+}
