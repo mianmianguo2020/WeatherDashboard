@@ -76,7 +76,7 @@ function searchForCity(cityName) {
 
 
 
-    var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
 
     $.ajax({
         url: queryUrl,
