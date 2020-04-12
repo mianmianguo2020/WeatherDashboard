@@ -32,7 +32,7 @@ function createCityDateEl(cityData) {
 
 function createForecastEl(forecastData) {
     let newDiv = $("<div>").attr("class", "forecastitem");
-    let weatherIcon = "http://openweathermap.org/img/wn/" + forecastData.icon + ".png"
+    let weatherIcon = "https://openweathermap.org/img/wn/" + forecastData.icon + ".png"
 
     createForecastItemDataElement(forecastData.date, newDiv);
     createForecastItemDataElement(forecastData.temp, newDiv);
