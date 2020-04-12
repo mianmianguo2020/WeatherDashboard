@@ -1,6 +1,6 @@
 let cityRecord = [];
 $(document).ready(function () {
-    // let cityRecord = [];
+
 
     $("#searchBtn").on("click", onSearchClick);
 
@@ -28,9 +28,11 @@ function createCityDateEl(cityData) {
     $(".currentcitydata").append(newDiv);
 }
 
+
+
 function createForecastEl(forecastData) {
     let newDiv = $("<div>").attr("class", "forecastitem");
-    let weatherIcon = "http://openweathermap.org/img/wn/" + forecastData.icon + ".png"
+    let weatherIcon = "https://openweathermap.org/img/wn/" + forecastData.icon + ".png"
 
     createForecastItemDataElement(forecastData.date, newDiv);
     createForecastItemDataElement(forecastData.temp, newDiv);
@@ -54,7 +56,12 @@ function createForecastWeatherIcon(data, forecastItemDiv) {
 
 function onSearchClick() {
     let cityName = $("input").val();
-    searchForCity(cityName);
+    if (cityName === "") {
+        // do nothing
+    }
+    else {
+        searchForCity(cityName);
+    }
 }
 
 function onHistoryClick(event) {
@@ -69,7 +76,7 @@ function searchForCity(cityName) {
 
 
 
-    var queryUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
+    var queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=e112c6863270100dda4434fef755e48f&units=imperial";
 
     $.ajax({
         url: queryUrl,
@@ -123,8 +130,9 @@ function searchForCity(cityName) {
                     createForecastEl(forecastData)
 
                 };
-                let uvResult = "UVI: " + forcastInfo.current.uvi
-                createCityDateEl(uvResult);
+
+                createUVEl(forcastInfo.current.uvi);
+
 
             });
 
@@ -132,4 +140,26 @@ function searchForCity(cityName) {
     });
 
 
+}
+
+function createUVEl(data) {
+    let newDiv = $("<div>");
+    let uvResult = "UVI: ";
+    let spanTag = $("<span>").append(data);
+    $(newDiv).append(uvResult);
+    $(newDiv).append(spanTag);
+    if (data > 7) {
+
+        $(spanTag).attr("class", "redColor");
+
+    }
+    else if (data < 2) {
+        $(spanTag).attr("class", "yellowColor");
+
+    }
+    else {
+        $(spanTag).attr("class", "greenColor");
+
+    }
+    $(".currentcitydata").append(newDiv);
 }
